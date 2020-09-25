@@ -11,8 +11,8 @@ This part of the project comprises two days:
 import sys
 sys.path.append("../queue")
 sys.path.append("../stack")
-from queue import Queue
-from stack import Stack
+from queue_local import Queue
+from stack_local import Stack
 class BSTNode:
     """
     The left subtree of a node contains only nodes with values lesser than the node’s value.
@@ -24,12 +24,20 @@ class BSTNode:
         self.left = None
         self.right = None
 
+    def has_no_left(self):
+        if not self.left:
+            return True
+
+    def has_no_right(self):
+        if not self.right:
+            return True
+
     # Insert the given value into the tree
     def insert(self, value):
         # check if the new nodes value is less than the current nodes value
         if value < self.value:
             # if there is no left child already here
-            if not self.left:
+            if self.has_no_left():
                 # add the new node to the left
                 # create a BSTNode and encapsulate the value in it then set it to the left
                 self.left = BSTNode(value)
@@ -39,7 +47,7 @@ class BSTNode:
         # otherwise (the new nodes value is greaterthan or equal to the current node value)
         else:
             # if there is no right child already here
-            if not self.right:
+            if self.has_no_right():
                 # add the new node to the right
                 # create a BSTNode and encapsulate the value in it then set it to the right
                 self.right = BSTNode(value)
@@ -58,7 +66,7 @@ class BSTNode:
         # check if the target is less than the current nodes value
         if target < self.value:
             # if there is no left child already here
-            if not self.left:
+            if self.has_no_left():
                 # return False
                 return False
             # otherwise
@@ -68,7 +76,7 @@ class BSTNode:
         # otherwise (the target is greater than the current nodes value)
         else:
             # if there is no right child already here
-            if not self.right:
+            if self.has_no_right():
                 # return False
                 return False
             # otherwise
@@ -83,7 +91,7 @@ class BSTNode:
 
         # recursive approach
         # check if there is no node to the right
-        if not self.right:
+        if self.has_no_right():
             # return the nodes value
             return self.value
         # return a call to get max on the right child
@@ -232,3 +240,5 @@ print("in order")
 bst.in_order_print()
 print("post order")
 bst.post_order_dft() 
+
+print(sys.path)
